@@ -1,0 +1,2 @@
+#pragma once 
+#define EL_CORE_VERSION "@VERSION_STRING@"
