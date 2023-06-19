@@ -1,5 +1,7 @@
 project(el)
 
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
 file(GLOB_RECURSE SRC
     *.h
     *.hpp
