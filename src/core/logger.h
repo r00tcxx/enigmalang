@@ -12,7 +12,7 @@ enum LogLevel {
 };
 
 class Logger : public tk::Singleton<Logger> {
-	friend tk::Singleton<Logger>;
+	friend class tk::Singleton<Logger>;
 public:
 	NO_COPYABLE_MOVEABLE(Logger)
 	void logging(
@@ -24,8 +24,7 @@ public:
 		flag_.store(false);
 	}
 private:
-	Logger() = default;
-	~Logger() = default;
+	Logger() {};
 private:
 	std::atomic<bool> flag_;
 };
@@ -34,26 +33,26 @@ template<typename ...Args>
 void Info(
 	const std::string_view fmt,
 	Args ...args) {
-	logger::Instance().logging(LogLevel::kInfo, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
+	Logger::Instance().logging(LogLevel::kInfo, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
 }
 
 template<typename ...Args>
 void Debug(
 	std::string_view fmt,
 	Args ...args) {
-	logger::Instance().logging(LogLevel::kDebug, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
+	Logger::Instance().logging(LogLevel::kDebug, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
 }
 
 template<typename ...Args>
 void Error(
 	std::string_view fmt,
 	Args ...args) {
-	logger::Instance().logging(LogLevel::kError, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
+	Logger::Instance().logging(LogLevel::kError, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
 }
 
 template<typename ...Args>
 void Warn(
 	std::string_view fmt,
 	Args ...args) {
-	logger::Instance().logging(LogLevel::kWarn, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
+	Logger::Instance().logging(LogLevel::kWarn, std::vformat(fmt, std::make_format_args(std::forward<Args>(args)...)));
 }

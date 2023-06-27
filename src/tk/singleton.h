@@ -19,11 +19,16 @@ namespace tk {
 	template<class T>
 	class Singleton {
 	public:
+		Singleton() = default;
+		virtual ~Singleton() {}
+
 		template<typename ...Args>
 		static T& Instance(Args&& ...args) {
 			static std::once_flag once_flag;
-			std::call_once(once_flag, [this, &args...] {
-				instance_.reset(new T(std::forward<Args>(args)...);
+			std::call_once(
+				once_flag, 
+				[&args...] {
+					instance_.reset(new T(std::forward<Args>(args)...));
 				});
 			return *instance_;
 		}
